@@ -124,11 +124,12 @@ yesButton.addEventListener('click', () => {
   invitation.hidden = true;
   reveal.hidden = false;
   photoStatus.textContent = '';
+  trackClick('NO');
   document.querySelector('#reveal-title').focus({ preventScroll: true });
 });
 
 document.querySelector('#final-yes-button').addEventListener('click', () => {
-  trackClick('Final Yes');
+  trackClick('Yes');
   photoStatus.innerHTML = 'Hmida never reached this stage and did not code the next part; please contact the administrator for further instructions.<br><img src="image.png" alt="Success image" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">';
 });
 
