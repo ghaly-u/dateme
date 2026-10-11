@@ -117,6 +117,7 @@ noButton.addEventListener('click', escapeNo);
 window.addEventListener('resize', resetNoButton);
 
 noStaticButton.addEventListener('click', () => {
+  trackClick('NO');
   photoStatus.innerHTML = '<img src="no_signal.png" alt="No signal image" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 9999; margin: 0;">';
 });
 
@@ -124,7 +125,6 @@ yesButton.addEventListener('click', () => {
   invitation.hidden = true;
   reveal.hidden = false;
   photoStatus.textContent = '';
-  trackClick('NO');
   document.querySelector('#reveal-title').focus({ preventScroll: true });
 });
 
