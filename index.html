@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#faeeee">
+    <title>A little question for you</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <section class="invitation" id="invitation" aria-labelledby="question">
+        <p class="eyebrow">A LITTLE QUESTION FOR YOU</p>
+        <h1 id="question">Will you go on<br>a <em>date</em> with me?</h1>
+        <div class="answers">
+          <button class="yes-button" id="yes-button" type="button">Yes</button>
+          <span class="no-slot">
+            <button class="no-button" id="no-button" type="button">No</button>
+            <button class="no-button no-static" id="no-static-button" type="button" hidden>No (who is not moving)</button>
+          </span>
+        </div>
+        <p class="little-note"></p>
+      </section>
+
+      <section class="reveal" id="reveal" aria-labelledby="reveal-title" hidden>
+        <p class="eyebrow">WAIT, REALLY? FEINTE JDIDA ?</p>
+        <figure class="photograph">
+          <img id="date-photo" src="photo.jpg" alt="A bouquet of pink flowers" width="480" height="480">
+          <figcaption><h1 id="reveal-title" tabindex="-1">are youu sure ?</h1></figcaption>
+        </figure>
+        <div class="answers">
+          <button class="yes-button" id="final-yes-button" type="button">Yes</button>
+        </div>
+        <button class="reset-button" id="reset-button" type="button">Ask me again</button>
+      </section>
+      <p class="photo-status" id="photo-status" role="status"></p>
+    </main>
+
+    <footer><span>Hopefully</span><span>The last call 🙂</span></footer>
+  </body>
+</html>
