@@ -53,19 +53,9 @@ try {
   }
 } catch {}
 
-const photoSequence = [
-  { from: 0, src: 'boateng.jpg' },
-  { from: 5, src: 'saibari.jpg' },
-  { from: 7, src: 'hamdallah.webp' },
-];
-
-function updateRevealPhoto() {
-  const step = [...photoSequence].reverse().find(item => moveCount >= item.from);
-  if (photo.getAttribute('src') !== step.src) photo.src = step.src;
+function updateInvitationPhoto() {
   invitationPhoto.hidden = moveCount < 5;
 }
-
-updateRevealPhoto();
 
 function resetNoButton() {
   noButton.style.transform = '';
@@ -118,7 +108,7 @@ function escapeNo(event) {
   noButton.style.transform = `translate(${noOffset.x}px, ${noOffset.y}px)`;
   
   moveCount++;
-  updateRevealPhoto();
+  updateInvitationPhoto();
   if (moveCount === 7) {
     noStaticButton.hidden = false;
   }
@@ -158,6 +148,6 @@ document.querySelector('#reset-button').addEventListener('click', () => {
   invitation.hidden = false;
   photoStatus.innerHTML = '';
   resetNoButton();
-  updateRevealPhoto();
+  updateInvitationPhoto();
   yesButton.focus({ preventScroll: true });
 });
