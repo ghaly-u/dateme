@@ -4,8 +4,9 @@ const yesButton = document.querySelector('#yes-button');
 const noButton = document.querySelector('#no-button');
 const noStaticButton = document.querySelector('#no-static-button');
 const photo = document.querySelector('#date-photo');
+const invitationPhoto = document.querySelector('#invitation-photo');
 const photoStatus = document.querySelector('#photo-status');
-const noSlot = document.querySelector('.no-slot');
+let noOffset = { x: 0, y: 0 };
 let escapeUntil = 0;
 let moveCount = 0;
 const defaultPhoto = 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800&q=85';
@@ -52,8 +53,21 @@ try {
   }
 } catch {}
 
+const photoSequence = [
+  { from: 0, src: 'boateng.jpg' },
+  { from: 5, src: 'saibari.jpg' },
+  { from: 7, src: 'hamdallah.webp' },
+];
+
+function updateRevealPhoto() {
+  const step = [...photoSequence].reverse().find(item => moveCount >= item.from);
+  if (photo.getAttribute('src') !== step.src) photo.src = step.src;
+  invitationPhoto.hidden = moveCount < 5;
+}
+
 function resetNoButton() {
   noButton.style.transform = '';
+  noOffset = { x: 0, y: 0 };
   noStaticButton.hidden = true;
   escapeUntil = 0;
   moveCount = 0;
@@ -63,14 +77,15 @@ function escapeNo(event) {
   if (event.cancelable) event.preventDefault();
   if (invitation.hidden || performance.now() < escapeUntil) return;
   const bounds = noButton.getBoundingClientRect();
-  const origin = noSlot.getBoundingClientRect();
+  const origin = { left: bounds.left - noOffset.x, top: bounds.top - noOffset.y };
   const pointerX = event.clientX;
   const pointerY = event.clientY;
   const margin = 16;
   const maxLeft = Math.max(margin, document.documentElement.clientWidth - bounds.width - margin);
   const maxTop = Math.max(margin, window.innerHeight - bounds.height - margin);
-  const obstacles = [yesButton, ...invitation.querySelectorAll('h1, p')]
+  const obstacles = [yesButton, ...invitation.querySelectorAll('h1, p'), ...(invitationPhoto.hidden ? [] : [invitationPhoto])]
     .map(element => element.getBoundingClientRect());
+  const yesBottom = yesButton.getBoundingClientRect().bottom + 12;
   let bestPosition = null;
   let bestDistance = -1;
 
@@ -79,6 +94,7 @@ function escapeNo(event) {
       if (horizontal === 0 && vertical === 0) continue;
       const left = Math.min(maxLeft, Math.max(margin, bounds.left + horizontal * (bounds.width + 64)));
       const top = Math.min(maxTop, Math.max(margin, bounds.top + vertical * (bounds.height + 64)));
+      if (top < yesBottom) continue;
       if (Math.hypot(left - bounds.left, top - bounds.top) < 60) continue;
       const overlaps = obstacles.some(obstacle =>
         left < obstacle.right + 12 && left + bounds.width > obstacle.left - 12 &&
@@ -96,9 +112,11 @@ function escapeNo(event) {
 
   if (!bestPosition) return;
   escapeUntil = performance.now() + 260;
-  noButton.style.transform = `translate(${bestPosition.left - origin.left}px, ${bestPosition.top - origin.top}px)`;
+  noOffset = { x: bestPosition.left - origin.left, y: bestPosition.top - origin.top };
+  noButton.style.transform = `translate(${noOffset.x}px, ${noOffset.y}px)`;
   
   moveCount++;
+  updateRevealPhoto();
   if (moveCount === 7) {
     noStaticButton.hidden = false;
   }
@@ -130,7 +148,7 @@ yesButton.addEventListener('click', () => {
 
 document.querySelector('#final-yes-button').addEventListener('click', () => {
   trackClick('Yes');
-  photoStatus.innerHTML = 'Hmida never reached this stage and did not code the next part; please contact the administrator for further instructions.<br><img src="image.png" alt="Success image" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">';
+  photoStatus.innerHTML = 'Hmida is over here. Please contact hmida the administrator for further instructions.<br><img src="hamdallah.webp" alt="Success image" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">';
 });
 
 document.querySelector('#reset-button').addEventListener('click', () => {
@@ -138,5 +156,6 @@ document.querySelector('#reset-button').addEventListener('click', () => {
   invitation.hidden = false;
   photoStatus.innerHTML = '';
   resetNoButton();
+  updateRevealPhoto();
   yesButton.focus({ preventScroll: true });
 });
