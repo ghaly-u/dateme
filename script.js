@@ -65,6 +65,8 @@ function updateRevealPhoto() {
   invitationPhoto.hidden = moveCount < 5;
 }
 
+updateRevealPhoto();
+
 function resetNoButton() {
   noButton.style.transform = '';
   noOffset = { x: 0, y: 0 };
