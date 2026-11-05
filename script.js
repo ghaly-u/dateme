@@ -140,7 +140,7 @@ yesButton.addEventListener('click', () => {
 
 document.querySelector('#final-yes-button').addEventListener('click', () => {
   trackClick('Yes');
-  photoStatus.innerHTML = 'Hmida is over here. Please contact hmida the administrator for further instructions.<br><img src="hamdallah.webp" alt="Success image" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">';
+  photoStatus.innerHTML = 'Alright, Hmida stops here. Please contact Hmida the administrator for further instructions.<br><img src="hamdallah.webp" alt="Success image" style="max-width: 100%; height: auto; display: block; margin: 20px auto;">';
 });
 
 document.querySelector('#reset-button').addEventListener('click', () => {
